@@ -4,15 +4,28 @@ interface CanvasRendererProps {
   width?: number;
   height?: number;
   className?: string;
+  showControls?: boolean;
+  viewMode?: string;
+  zoomLevel?: number;
+  onZoomChange?: (level: number) => void;
+  onViewModeChange?: (mode: string) => void;
+  activeTool?: string;
 }
 
 export const CanvasRenderer: React.FC<CanvasRendererProps> = ({
   width = 800,
   height = 600,
-  className = ''
+  className = '',
+  showControls = false,
+  viewMode = 'fit',
+  zoomLevel = 1,
+  onZoomChange,
+  onViewModeChange,
+  activeTool = 'move'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [canvasWidth, setCanvasWidth] = useState(width);
 
   useEffect(() => {
     const canvas = canvasRef.current;
